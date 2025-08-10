@@ -39,97 +39,102 @@ export default function LogIn() {
   };
 
   return (
-    <div className="bg-[#309898] font-sevillana text-white">
-      <div className="flex justify-center items-center w-10/12 mx-auto">
-        <div className="w-[50%]">
-          <div className="flex justify-center min-h-screen items-center">
-            <div className="card bg-[#309898] w-full max-w-xl shrink-0 py-5 min-h-[500px]">
-              <h2 className="font-semibold text-4xl text-center">
-                Login your account
-              </h2>
-              <form onSubmit={handleLogIn} className="card-body mt-5">
-                <fieldset className="fieldset">
-                  {/* email  */}
-                  <div className="space-y-2">
-                    <label className="label text-lg">Email</label>
-                    <input
-                      name="email"
-                      type="email"
-                      className="input w-full rounded-lg text-black"
-                      placeholder="Email"
-                      required
-                    />
-                  </div>
-
-                  {/* passowrd  */}
-                  <div className="space-y-2">
-                    <label className="label text-lg mt-6">Password</label>
-                    <div className="relative">
+    <div className="bg-[#309898] font-sevillana text-white min-h-screen">
+      <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-6xl mx-auto px-4 py-8 lg:py-0">
+        {/* Form Section */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center order-2 lg:order-1">
+          <div className="w-full max-w-md lg:max-w-xl">
+            <div className="flex justify-center min-h-[400px] lg:min-h-screen items-center">
+              <div className="card bg-[#309898] w-full shrink-0 py-5 min-h-[500px]">
+                <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl text-center mb-4">
+                  Login your account
+                </h2>
+                <form onSubmit={handleLogIn} className="card-body mt-5 px-4 lg:px-8">
+                  <fieldset className="fieldset">
+                    {/* Email */}
+                    <div className="space-y-2">
+                      <label className="label text-base lg:text-lg">Email</label>
                       <input
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        className="input w-full rounded-lg text-black"
-                        placeholder="Password"
+                        name="email"
+                        type="email"
+                        className="input w-full rounded-lg text-black text-sm lg:text-base bg-white"
+                        placeholder="Email"
                         required
                       />
-                      <button
-                        onClick={() => setshowPassword(!showPassword)}
-                        className="btn btn-xs absolute top-3 right-3 text-2xl bg-base-100 border-none"
-                        type="button"
-                      >
-                        {showPassword ? <FaEye /> : <FaEyeSlash />}
-                      </button>
                     </div>
-                  </div>
 
-                  <div className="mt-4">
-                    <NavLink
-                      to="/auth/reset-password"
-                      className="link link-hover text-xl"
+                    {/* Password */}
+                    <div className="space-y-2">
+                      <label className="label text-base lg:text-lg mt-4 lg:mt-6">Password</label>
+                      <div className="relative">
+                        <input
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          className="input w-full rounded-lg text-black text-sm lg:text-base bg-white"
+                          placeholder="Password"
+                          required
+                        />
+                        <button
+                          onClick={() => setshowPassword(!showPassword)}
+                          className="btn btn-xs absolute top-2 lg:top-3 right-3 text-lg lg:text-2xl bg-base-100 border-none text-black"
+                          type="button"
+                        >
+                          {showPassword ? <FaEye /> : <FaEyeSlash />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="mt-4">
+                      <NavLink
+                        to="/auth/reset-password"
+                        className="link link-hover text-base lg:text-xl"
+                      >
+                        Forgot password?
+                      </NavLink>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn btn-neutral mt-4 lg:mt-6 text-base lg:text-xl rounded-lg w-full"
                     >
-                      Forgot password?
-                    </NavLink>
-                  </div>
+                      Login
+                    </button>
 
-                  <button
-                    type="submit"
-                    className="btn btn-neutral mt-6 text-xl rounded-lg"
-                  >
-                    Login
-                  </button>
+                    <div className="divider text-white text-sm lg:text-lg">or</div>
 
-                  <div className="divider text-white text-lg">or</div>
+                    <button className="flex items-center justify-center gap-2 cursor-pointer w-full py-2 hover:bg-white/10 rounded-lg transition-colors">
+                      <FcGoogle size={20} className="lg:w-6 lg:h-6" />
+                      <span className="text-base lg:text-lg text-white">
+                        Login with Google
+                      </span>
+                    </button>
 
-                  <button className="flex items-center justify-center gap-2 cursor-pointer">
-                    <FcGoogle
-                     size={24} />{" "}
-                    <span className="text-lg text-white">
-                      Login with Google
-                    </span>
-                  </button>
+                    <p className="font-semibold text-center pt-5 text-base lg:text-xl">
+                      Don't Have An Account?{" "}
+                      <Link className="text-black text-base lg:text-xl hover:underline" to="/register">
+                        Register
+                      </Link>
+                    </p>
 
-                  <p className="font-semibold text-center pt-5 text-xl">
-                    Dont’t Have An Account ?{" "}
-                    <Link className="text-black text-xl" to="/register">
-                      Register
-                    </Link>
-                  </p>
-
-                  <p className="text-xl text-center font-semibold text-red-600">
-                    {error}
-                  </p>
-                </fieldset>
-              </form>
+                    {error && (
+                      <p className="text-base lg:text-xl text-center font-semibold text-red-600 mt-2">
+                        {error}
+                      </p>
+                    )}
+                  </fieldset>
+                </form>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="w-[50%] flex justify-center items-center">
+        {/* Animation Section */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center order-1 lg:order-2 mb-8 lg:mb-0">
           <Lottie
             animationData={LogInAnimation}
             loop={true}
-            style={{ width: 500, height: 500 }}
-          ></Lottie>
+            className="w-64 h-64 sm:w-80 sm:h-80 lg:w-[500px] lg:h-[500px]"
+          />
         </div>
       </div>
     </div>

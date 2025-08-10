@@ -68,14 +68,14 @@ export default function Navbar() {
             </ul>
           </div>
           <Link className="flex items-center cursor-pointer" to="/">
-            <div className="h-12 w-12">
+            <div className="h-10 lg:h-12 w-10 lg:w-12">
               <img
                 src={Logo}
                 alt=""
                 className="filter brightness-0 saturate-0"
               />
             </div>
-            <h1 className="text-xl font-bold font-sevillana">
+            <h1 className="text-xl font-bold font-sevillana hidden lg:block">
               <span className="text-[#1B0C4D]">Assign</span>
               <span className="text-yellow-600">Mint</span>
             </h1>

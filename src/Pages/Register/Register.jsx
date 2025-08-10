@@ -72,8 +72,6 @@ export default function Register() {
             });
             setUser(user);
           });
-
-        navigate(location.state ? location.state : "/");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -83,101 +81,106 @@ export default function Register() {
   };
 
   return (
-    <div className="bg-[#493D9E] font-sevillana">
-      <div className="flex items-center w-10/12 mx-auto">
-        <div className="w-[50%]">
+    <div className="bg-[#493D9E] font-sevillana h-full">
+      <div className="flex flex-col lg:flex-row items-center w-full max-w-6xl mx-auto px-4 py-8 lg:py-0">
+        {/* Animation Section */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center order-1 lg:order-1 mb-8 lg:mb-0">
           <Lottie
             animationData={RegAnimation}
             loop={true}
-            style={{ width: 500, height: 500 }}
-          ></Lottie>
+            className="w-64 h-64 sm:w-80 sm:h-80 lg:w-[500px] lg:h-[500px]"
+          />
         </div>
 
-        <div className="w-[50%]">
-          <div className="flex justify-center min-h-screen items-center">
-            <div className="card bg-[#493D9E] w-full shrink-0 py-5 min-h-[500px]">
-              <h2 className="font-semibold text-2xl text-center text-white">
-                Register your account
-              </h2>
-              <form onSubmit={handleRegister} className="card-body">
-                <fieldset className="fieldset">
-                  {/* Name  */}
-                  <label className="label text-sm text-white">Name</label>
-                  <input
-                    name="name"
-                    type="text"
-                    className="input w-full rounded-lg"
-                    placeholder="Name"
-                    required
-                  />
-
-                  {/* Photo URl  */}
-                  <label className="label text-sm mt-6 text-white">
-                    Photo URL
-                  </label>
-                  <input
-                    name="photo"
-                    type="text"
-                    className="input w-full rounded-lg"
-                    placeholder="Photo URL"
-                    required
-                  />
-
-                  {/* Email  */}
-                  <label className="label text-sm mt-6 text-white">Email</label>
-                  <input
-                    name="email"
-                    type="email"
-                    className="input w-full rounded-lg"
-                    placeholder="Email"
-                    required
-                  />
-
-                  {/* Password  */}
-                  <label className="label text-sm mt-6 text-white">
-                    Password
-                  </label>
-                  <div className="relative">
+        {/* Form Section */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center order-2 lg:order-2">
+          <div className="w-full max-w-md lg:max-w-xl">
+            <div className="flex justify-center min-h-[400px] lg:min-h-screen items-center">
+              <div className="card bg-[#493D9E] w-full shrink-0">
+                <h2 className="font-semibold text-xl md:text-2xl text-center text-white mb-4">
+                  Register your account
+                </h2>
+                <form onSubmit={handleRegister} className="card-body px-4 lg:px-8">
+                  <fieldset className="fieldset">
+                    {/* Name */}
+                    <label className="label text-sm lg:text-base text-white">Name</label>
                     <input
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      className="input w-full rounded-lg"
-                      placeholder="Password"
+                      name="name"
+                      type="text"
+                      className="input w-full rounded-lg text-sm lg:text-base bg-white"
+                      placeholder="Name"
                       required
                     />
+
+                    {/* Photo URL */}
+                    <label className="label text-sm lg:text-base mt-4 lg:mt-6 text-white">
+                      Photo URL
+                    </label>
+                    <input
+                      name="photo"
+                      type="text"
+                      className="input w-full rounded-lg text-sm lg:text-base bg-white"
+                      placeholder="Photo URL"
+                      required
+                    />
+
+                    {/* Email */}
+                    <label className="label text-sm lg:text-base mt-4 lg:mt-6 text-white">Email</label>
+                    <input
+                      name="email"
+                      type="email"
+                      className="input w-full rounded-lg text-sm lg:text-base bg-white"
+                      placeholder="Email"
+                      required
+                    />
+
+                    {/* Password */}
+                    <label className="label text-sm lg:text-base mt-4 lg:mt-6 text-white">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        className="input w-full rounded-lg text-sm lg:text-base bg-white"
+                        placeholder="Password"
+                        required
+                      />
+                      <button
+                        onClick={() => setshowPassword(!showPassword)}
+                        className="btn btn-xs absolute top-2 lg:top-3 right-3 text-lg lg:text-2xl bg-white border-none"
+                        type="button"
+                      >
+                        {showPassword ? <FaEye /> : <FaEyeSlash />}
+                      </button>
+                    </div>
+                    {passwordError && (
+                      <p className="text-red-400 text-xs lg:text-sm mt-1">{passwordError}</p>
+                    )}
+
                     <button
-                      onClick={() => setshowPassword(!showPassword)}
-                      className="btn btn-xs absolute top-3 right-3 text-2xl bg-white border-none"
-                      type="button"
+                      type="submit"
+                      className="btn btn-neutral mt-4 text-sm lg:text-lg rounded-lg w-full"
                     >
-                      {showPassword ? <FaEye /> : <FaEyeSlash />}
+                      Register
                     </button>
-                  </div>
-                  {passwordError && (
-                    <p className="text-black text-sm">{passwordError}</p>
-                  )}
 
-                  <button
-                    type="submit"
-                    className="btn btn-neutral mt-4 text-lg rounded-lg"
-                  >
-                    Register
-                  </button>
+                    <div className="divider text-white text-sm lg:text-lg">or</div>
 
-                  <div className="divider text-white text-lg">or</div>
+                    <button className="flex items-center justify-center gap-2 cursor-pointer w-full py-2 hover:bg-white/10 rounded-lg transition-colors">
+                      <FcGoogle size={20} className="lg:w-6 lg:h-6" />
+                      <span className="text-sm lg:text-lg text-white">Login with Google</span>
+                    </button>
 
-                  <button className="flex items-center justify-center gap-2 cursor-pointer">
-                    <FcGoogle size={24} /> <span className="text-lg text-white">Login with Google</span>
-                  </button>
-
-                  <p className="font-semibold text-center pt-8 text-xl text-white">
-                    Already Have An Account?{" "}
-                    <Link className="text-xl text-black" to="/login">
-                      Login
-                    </Link>
-                  </p>                  
-                </fieldset>
-              </form>
+                    <p className="font-semibold text-center pt-6 lg:pt-8 text-base lg:text-xl text-white">
+                      Already Have An Account?{" "}
+                      <Link className="text-base lg:text-xl text-yellow-300 hover:underline" to="/login">
+                        Login
+                      </Link>
+                    </p>
+                  </fieldset>
+                </form>
+              </div>
             </div>
           </div>
         </div>
