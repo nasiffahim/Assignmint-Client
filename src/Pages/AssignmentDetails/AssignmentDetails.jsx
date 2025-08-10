@@ -68,61 +68,79 @@ export default function AssignmentDetails() {
     assignment || {};
 
   return (
-    <div className="bg-white">
+    <div className="bg-white min-h-screen">
       <div className="w-11/12 mx-auto font-sevillana">
-        <div className="flex justify-between items-start p-5 gap-8">
-          <div className="w-[70%] space-y-3">
-            <h1 className="text-2xl text-bold">
+        {/* Mobile-first responsive layout */}
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start p-3 sm:p-5 gap-6 lg:gap-8">
+          
+          {/* Main Assignment Content */}
+          <div className="w-full lg:w-[70%] space-y-4 lg:space-y-3">
+            <h1 className="text-xl sm:text-2xl font-bold leading-tight">
               <span className="font-extrabold">Assignment: </span>
               {title}
             </h1>
+            
             <img
               src={photo}
-              alt=""
-              className="w-full h-[70vh] object-cover rounded-xl"
+              alt="Assignment"
+              className="w-full h-[40vh] sm:h-[50vh] lg:h-[70vh] object-cover rounded-xl"
             />
-            <div>
-              <p className="font-bold text-lg">What to do?</p>
-              <p># {description}</p>
+            
+            <div className="space-y-2">
+              <p className="font-bold text-base sm:text-lg">What to do?</p>
+              <p className="text-sm sm:text-base leading-relaxed"># {description}</p>
             </div>
-            <p>
-              <span className="font-bold">Assignment Marks: </span>
-              {marks}
-            </p>
-            <p>
-              <span className="font-bold">Assignment Deadline: </span>
-              {dueDate ? new Date(dueDate).toISOString().split("T")[0] : "N/A"}
-            </p>
+            
+            <div className="space-y-2 text-sm sm:text-base">
+              <p>
+                <span className="font-bold">Assignment Marks: </span>
+                {marks}
+              </p>
+              <p>
+                <span className="font-bold">Assignment Deadline: </span>
+                {dueDate ? new Date(dueDate).toISOString().split("T")[0] : "N/A"}
+              </p>
+            </div>
           </div>
 
-          <div className="w-[30%] flex flex-col">
-            <h1 className="font-bold text-2xl mb-10 text-center">
-              Assignment Created By:
-            </h1>
-            <p>
-              <span className="font-bold">Name: </span>
-              {createdBy?.name}
-            </p>
-            <p>
-              <span className="font-bold">Email: </span>
-              {createdBy?.email}
-            </p>
-            <p>
-              <span className="font-bold">Created At: </span>
-              {createdAt
-                ? new Date(createdAt).toISOString().split("T")[0]
-                : "N/A"}
-            </p>
+          {/* Creator Info and Action Section */}
+          <div className="w-full lg:w-[30%] flex flex-col space-y-6">
+            
+            {/* Creator Information */}
+            <div className="bg-gray-50 p-4 sm:p-6 rounded-xl">
+              <h2 className="font-bold text-lg sm:text-xl lg:text-2xl mb-4 sm:mb-6 text-center">
+                Assignment Created By:
+              </h2>
+              
+              <div className="space-y-2 text-sm sm:text-base">
+                <p>
+                  <span className="font-bold">Name: </span>
+                  {createdBy?.name}
+                </p>
+                <p>
+                  <span className="font-bold">Email: </span>
+                  <span className="break-all">{createdBy?.email}</span>
+                </p>
+                <p>
+                  <span className="font-bold">Created At: </span>
+                  {createdAt
+                    ? new Date(createdAt).toISOString().split("T")[0]
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
 
-            <h1 className="font-bold text-3xl text-center pt-50">
-              Interested in taking the Assignment?
-            </h1>
-            <div className="flex justify-center items-center">
+            {/* Action Section */}
+            <div className="bg-gradient-to-br from-[#1B0C4D] to-[#2D1B69] p-4 sm:p-6 rounded-xl text-white text-center">
+              <h2 className="font-bold text-lg sm:text-xl lg:text-2xl mb-4 sm:mb-6 leading-tight">
+                Interested in taking the Assignment?
+              </h2>
+              
               <button
                 onClick={() => setSubmitModalOpen(true)}
-                className="mt-10 px-4 py-2 rounded-lg bg-[#1B0C4D] text-white w-fit"
+                className="px-6 py-3 rounded-lg bg-white text-[#1B0C4D] font-semibold hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
               >
-                Take Assignmnet
+                Take Assignment
               </button>
             </div>
           </div>

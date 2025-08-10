@@ -65,12 +65,10 @@ const PendingAssignments = () => {
 
       Swal.fire("Success", "Marked successfully!", "success");
 
-      // Optionally remove marked item from list
       setCombined(
         combined.filter((item) => item._id !== selectedAssignment._id)
       );
 
-      // Reset modal state
       setSelectedAssignment(null);
       setMark("");
       setFeedback("");
@@ -81,72 +79,125 @@ const PendingAssignments = () => {
   };
 
   return (
-    <div className="overflow-x-auto bg-white pb-20">
+    <div className="bg-white pb-20">
       <div className="w-11/12 mx-auto font-sevillana">
         <h2 className="text-2xl font-semibold text-center my-10">
           Pending Assignments
         </h2>
+
         {combined.length === 0 ? (
           <p className="text-2xl font-semibold text-center my-10">
             No pending assignments to evaluate.
           </p>
         ) : (
-          <table className="table-auto w-full border border-gray-300">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="border p-2">Title</th>
-                <th className="border p-2">Assignment Answer</th>
-                <th className="border p-2">Note</th>
-                <th className="border p-2">Marks</th>
-                <th className="border p-2">Examinee Email</th>
-                <th className="border p-2">Action</th>
-              </tr>
-            </thead>
-            <tbody>
+          <>
+            {/* Table for larger screens */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="table-auto min-w-[600px] border border-gray-300 text-sm sm:text-base w-full">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="border p-2">Title</th>
+                    <th className="border p-2">Assignment Answer</th>
+                    <th className="border p-2">Note</th>
+                    <th className="border p-2">Marks</th>
+                    <th className="border p-2">Examinee Email</th>
+                    <th className="border p-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {combined.map((item) => (
+                    <tr key={item._id}>
+                      <td className="border p-2 break-words">{item.title}</td>
+                      <td className="border p-2 text-center">
+                        <a
+                          href={item.googleDocLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline break-all"
+                        >
+                          View
+                        </a>
+                      </td>
+                      <td className="border p-2 break-words">{item.quickNote}</td>
+                      <td className="border p-2 text-center">{item.marks}</td>
+                      <td className="border p-2 break-words">{item.email}</td>
+                      <td className="border p-2 text-center">
+                        {item.email !== user?.email ? (
+                          <button
+                            onClick={() => setSelectedAssignment(item)}
+                            className="bg-[#1B0C4D] text-white rounded px-2 py-1 text-xs sm:text-sm"
+                          >
+                            Give Mark
+                          </button>
+                        ) : (
+                          <span
+                            className="text-red-500 text-lg"
+                            title="You cannot mark your own created assignment"
+                          >
+                            🚫
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Card layout for mobile */}
+            <div className="sm:hidden space-y-4">
               {combined.map((item) => (
-                <tr key={item._id}>
-                  <td className="border p-2">{item.title}</td>
-                  <td className="border p-2 text-center">
+                <div
+                  key={item._id}
+                  className="border rounded-lg p-4 shadow-sm bg-white"
+                >
+                  <p className="font-semibold">Title: {item.title}</p>
+                  <p>
+                    <strong>Answer:</strong>{" "}
                     <a
                       href={item.googleDocLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 underline"
                     >
-                      View Answer
+                      View
                     </a>
-                  </td>
-                  <td className="border p-2 text-center">{item.quickNote}</td>
-                  <td className="border p-2 text-center">{item.marks}</td>
-                  <td className="border p-2 text-center">{item.email}</td>
-                  <td className="border p-2 text-center">
-                    {item.email !== user?.email ? (
-                      <button
-                        onClick={() => setSelectedAssignment(item)}
-                        className="btn bg-[#1B0C4D] text-white rounded px-3 py-1 text-sm"
-                      >
-                        Give Mark
-                      </button>
-                    ) : (
-                      <span
-                        className="text-red-500 text-lg"
-                        title="You cannot mark your own created assinment"
-                      >
-                        🚫
-                      </span>
-                    )}
-                  </td>
-                </tr>
+                  </p>
+                  <p>
+                    <strong>Note:</strong> {item.quickNote}
+                  </p>
+                  <p>
+                    <strong>Marks:</strong> {item.marks}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {item.email}
+                  </p>
+                  {item.email !== user?.email ? (
+                    <button
+                      onClick={() => setSelectedAssignment(item)}
+                      className="mt-2 bg-[#1B0C4D] text-white rounded px-3 py-1 text-sm w-full"
+                    >
+                      Give Mark
+                    </button>
+                  ) : (
+                    <span
+                      className="text-red-500 text-lg mt-2 block"
+                      title="You cannot mark your own created assignment"
+                    >
+                      🚫
+                    </span>
+                  )}
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </>
         )}
       </div>
 
       {/* Modal */}
       {selectedAssignment && (
-        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black/30 backdrop-blur-sm">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-2">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Evaluate Assignment</h2>
             <p>
               <strong>Google Doc:</strong>{" "}
@@ -185,16 +236,16 @@ const PendingAssignments = () => {
               ></textarea>
             </div>
 
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row justify-end gap-3">
               <button
                 onClick={() => setSelectedAssignment(null)}
-                className="px-4 py-1 rounded border"
+                className="px-4 py-1 rounded border w-full sm:w-auto"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmitMark}
-                className="bg-[#1B0C4D] text-white px-4 py-1 rounded"
+                className="bg-[#1B0C4D] text-white px-4 py-1 rounded w-full sm:w-auto"
               >
                 Submit
               </button>
