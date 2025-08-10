@@ -14,14 +14,9 @@ export default function Navbar() {
       <NavLink to="/assignments">
         <li className="mr-10 font-sevillana text-yellow-600">Assignments</li>
       </NavLink>
-
-      {user && user.email ? (
-        <NavLink to="/pending-assignments">
-          <li className="mr-10 text-black font-sevillana">Pending Assignments</li>
-        </NavLink>
-      ) : (
-        ""
-      )}
+      <NavLink to="/pending-assignments">
+        <li className="mr-10 text-black font-sevillana">Pending Assignments</li>
+      </NavLink>
     </>
   );
 
@@ -79,7 +74,10 @@ export default function Navbar() {
                 className="filter brightness-0 saturate-0"
               />
             </div>
-            <h1 className="text-xl font-bold font-sevillana"><span className="text-[#1B0C4D]">Assign</span><span className="text-yellow-600">Mint</span></h1>
+            <h1 className="text-xl font-bold font-sevillana">
+              <span className="text-[#1B0C4D]">Assign</span>
+              <span className="text-yellow-600">Mint</span>
+            </h1>
           </Link>
         </div>
         <div className="navbar-end items-center space-x-2">
@@ -137,7 +135,10 @@ export default function Navbar() {
             ) : (
               <div className="space-x-4">
                 {" "}
-                <Link to="/register" className="cursor-pointer font-sevillana underline">
+                <Link
+                  to="/register"
+                  className="cursor-pointer font-sevillana underline"
+                >
                   Register
                 </Link>
                 <Link

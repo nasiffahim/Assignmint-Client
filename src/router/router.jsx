@@ -20,7 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch("https://online-group-study-server-eosin.vercel.app/assignments"),
+        loader: () =>
+          fetch(
+            "https://online-group-study-server-eosin.vercel.app/assignments"
+          ),
       },
       {
         path: "/create-assignment",
@@ -33,15 +36,14 @@ const router = createBrowserRouter([
       {
         path: "/assignments",
         element: <Assignments />,
-        loader: () => fetch("https://online-group-study-server-eosin.vercel.app/assignments"),
+        loader: () =>
+          fetch(
+            "https://online-group-study-server-eosin.vercel.app/assignments"
+          ),
       },
       {
         path: "/assignment/:id",
-        element: (
-          <PrivateRoute>
-            <AssignmentDetails />,
-          </PrivateRoute>
-        ),
+        element: <AssignmentDetails />,
       },
       {
         path: "/my-assignments",
@@ -70,7 +72,7 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <ErrorPage />,
-      }
+      },
     ],
   },
 ]);
