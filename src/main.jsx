@@ -5,11 +5,14 @@ import "./index.css";
 import App from "./App.jsx";
 import router from "./router/router.jsx";
 import AuthProvider from "./Provider/AuthProvider.jsx";
+import ThemeProvider from "./Provider/ThemeProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </AuthProvider>
   </StrictMode>
 );

@@ -2,6 +2,7 @@ import React, { use } from "react";
 import Logo from "../../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 export default function Navbar() {
   const { user, logOut } = use(AuthContext);
@@ -84,6 +85,9 @@ export default function Navbar() {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{Links}</ul>
           </div>
+
+          {/* <ThemeToggle className="mr-1" /> */}
+
           <div>
             {user ? (
               <div className="flex justify-center items-center gap-6">

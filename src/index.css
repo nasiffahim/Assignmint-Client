@@ -1,13 +1,57 @@
 @import "tailwindcss";
+
+/* DaisyUI themes with your brand colors */
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+  themes:
+    light --default {
+      /* Brand */
+      primary: #1B0C4D;
+      "primary-content": #ffffff;
+
+      secondary: #309898;
+      "secondary-content": #0b0f19;
+
+      accent: #493D9E;
+      "accent-content": #ffffff;
+
+      /* Surfaces and content */
+      "base-100": #ffffff;   /* cards, main surfaces */
+      "base-200": #f2f2f2;   /* subtle background */
+      "base-300": #e5e6e6;   /* borders, dividers */
+      "base-content": #1f2937; /* default text */
+
+      /* Feedback (optional, can keep Daisy defaults) */
+      info: #3abff8;
+      success: #22c55e;
+      warning: #fbbf24;
+      error: #ef4444;
+    },
+    dark --prefersdark {
+      primary: #1B0C4D;
+      "primary-content": #ffffff;
+
+      secondary: #309898;
+      "secondary-content": #0b0f19;
+
+      accent: #493D9E;
+      "accent-content": #ffffff;
+
+      "base-100": #0b0f19;   /* main surface */
+      "base-200": #111827;   /* background */
+      "base-300": #1f2937;   /* borders/dividers */
+      "base-content": #e5e7eb; /* default text */
+
+      info: #38bdf8;
+      success: #22c55e;
+      warning: #f59e0b;
+      error: #ef4444;
+    };
 }
 
-
+/* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sevillana&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-
 
 .font-lato {
   font-family: "Lato", sans-serif;
