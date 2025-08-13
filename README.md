@@ -1,4 +1,4 @@
-# 🎨 Assignmint - Frontend
+# 🎨 Assignmint - Online Group Study Portal
 
 Assignmint is a web-based assignment management platform where users can log in, create assignments, attempt assignments created by others, and receive marks after review.  
 This repository contains the **frontend** of Assignmint, built with **React.js** for a smooth, responsive, and dynamic user experience.
