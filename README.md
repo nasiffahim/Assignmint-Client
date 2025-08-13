@@ -1,12 +1,49 @@
-# React + Vite
+# 🎨 Assignmint - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Assignmint is a web-based assignment management platform where users can log in, create assignments, attempt assignments created by others, and receive marks after review.  
+This repository contains the **frontend** of Assignmint, built with **React.js** for a smooth, responsive, and dynamic user experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 About the Project
+Assignmint was designed to demonstrate **CRUD operations** (Create, Read, Update, Delete) in a real-world scenario while keeping the features focused on assignments and grading.  
 
-## Expanding the ESLint configuration
+The goal is to create a simple yet functional system where:
+- People can **share** assignments publicly.
+- Others can **take** those assignments.
+- Assignments can be **reviewed and graded**.
+- Users can **track** their attempted assignments and results.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠 Tech Stack
+- **React.js** – Component-based UI rendering.
+- **React Router** – Smooth navigation without page reloads.
+- **Tailwind CSS** – Modern, utility-first styling.
+- **Axios** – API communication with the backend.
+- **JWT Authentication** – Secure login sessions.
+
+---
+
+## 🔄 User Flow
+1. **Sign Up / Login** – Create an account or log in.
+2. **Create Assignment** – Add a title, description, and questions.
+3. **View All Assignments** – Browse assignments created by others.
+4. **Take Assignment** – Attempt any available assignment.
+5. **Attempted Assignments** – View your past attempts.
+6. **Pending Assignments** – See submissions awaiting review (for reviewers).
+7. **Mark & Review** – Grade answers and submit marks.
+
+---
+
+## 📂 Project Structure
+frontend/
+│
+├── public/ # Static assets
+└── src/
+├── components/ # Reusable UI components
+├── pages/ # Page components
+├── hooks/ # Custom React hooks
+├── utils/ # Helper functions
+├── App.js # Main app component
+└── index.js # Entry point
