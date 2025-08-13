@@ -35,15 +35,3 @@ The goal is to create a simple yet functional system where:
 7. **Mark & Review** – Grade answers and submit marks.
 
 ---
-
-## 📂 Project Structure
-frontend/
-│
-├── public/ # Static assets
-└── src/
-├── components/ # Reusable UI components
-├── pages/ # Page components
-├── hooks/ # Custom React hooks
-├── utils/ # Helper functions
-├── App.js # Main app component
-└── index.js # Entry point
