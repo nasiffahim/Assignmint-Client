@@ -11,6 +11,7 @@ import MyAssignments from "../Pages/MyAssignments/MyAssignments";
 import PendingAssignments from "../Pages/PendingAssignments/PendingAssignments";
 import PrivateRoute from "../Provider/PrivateRoute";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
+import MyBookmarks from "../Pages/MyBookmarksAssignments/MyBookmarksAssignments";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
         element: <Home />,
         loader: () =>
           fetch(
-            "https://online-group-study-server-eosin.vercel.app/assignments"
+            "http://localhost:3000/assignments"
           ),
       },
       {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
         element: <Assignments />,
         loader: () =>
           fetch(
-            "https://online-group-study-server-eosin.vercel.app/assignments"
+            "http://localhost:3000/assignments"
           ),
       },
       {
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyAssignments />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-bookmarks-assignments",
+        element: (
+          <PrivateRoute>
+            <MyBookmarks />
           </PrivateRoute>
         ),
       },

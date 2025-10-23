@@ -29,7 +29,7 @@ export default function CreateAssignment() {
     console.log(assignmentData);
 
     axios
-      .post("https://online-group-study-server-eosin.vercel.app/create-assignment", assignmentData)
+      .post("http://localhost:3000/create-assignment", assignmentData)
       .then((res) => {
         const data = res.data;
         console.log("Data added successfully", data);
@@ -84,7 +84,7 @@ export default function CreateAssignment() {
               <input
                 type="text"
                 name="title"
-                className="input w-full rounded-lg bg-white"
+                className="input w-full rounded-lg bg-white border-2 border-gray-300"
                 placeholder="Title"
                 required
               />
@@ -97,7 +97,7 @@ export default function CreateAssignment() {
               <input
                 type="text"
                 name="photo"
-                className="input w-full rounded-lg bg-white"
+                className="input w-full rounded-lg bg-white border-2 border-gray-300"
                 placeholder="Photo URL"
                 required
               />
@@ -110,7 +110,7 @@ export default function CreateAssignment() {
               <DatePicker
                 selected={dueDate}
                 onChange={(date) => setDueDate(date)}
-                className="input w-full rounded-lg bg-white"
+                className="input w-full rounded-lg bg-white border-2 border-gray-300"
                 placeholderText="Select a date"
                 dateFormat="yyyy-MM-dd"
                 required

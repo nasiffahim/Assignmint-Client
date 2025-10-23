@@ -20,9 +20,9 @@ const PendingAssignments = () => {
       try {
         const [pendingRes, assignmentsRes] = await Promise.all([
           axios.get(
-            `https://online-group-study-server-eosin.vercel.app/pending-assignments?examiner=${user.email}`
+            `http://localhost:3000/pending-assignments?examiner=${user.email}`
           ),
-          axios.get("https://online-group-study-server-eosin.vercel.app/assignments"),
+          axios.get("http://localhost:3000/assignments"),
         ]);
 
         setPending(pendingRes.data);
@@ -56,7 +56,7 @@ const PendingAssignments = () => {
 
     try {
       await axios.patch(
-        `https://online-group-study-server-eosin.vercel.app/submitted-assignments/${selectedAssignment._id}`,
+        `http://localhost:3000/submitted-assignments/${selectedAssignment._id}`,
         {
           obtainedMark: parseFloat(mark),
           feedback,

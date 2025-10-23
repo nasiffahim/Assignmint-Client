@@ -47,7 +47,7 @@ export default function EditAssignments({
 
     console.log("Submitting form data:", updatedFormData);
 
-    fetch(`https://online-group-study-server-eosin.vercel.app/assignment/${assignment._id}`, {
+    fetch(`http://localhost:3000/assignment/${assignment._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

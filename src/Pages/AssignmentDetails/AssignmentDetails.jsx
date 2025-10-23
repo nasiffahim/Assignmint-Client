@@ -10,8 +10,110 @@ export default function AssignmentDetails() {
   const { user } = use(AuthContext);
   const [assignment, setAssignment] = useState(null);
   const [submitModalOpen, setSubmitModalOpen] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [submittingComment, setSubmittingComment] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
   console.log(user);
+
+  // Check if assignment is bookmarked
+  const checkBookmarkStatus = () => {
+    if (!user?.email) return;
+    
+    fetch(`http://localhost:3000/bookmarks/check/${id}?email=${user.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setIsBookmarked(data.isBookmarked);
+      })
+      .catch((err) => {
+        console.error("Error checking bookmark status:", err);
+      });
+  };
+
+  // Toggle bookmark
+  const handleBookmarkToggle = () => {
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Not Logged In",
+        text: "Please log in to bookmark assignments",
+      });
+      return;
+    }
+
+    setBookmarkLoading(true);
+
+    if (isBookmarked) {
+      // Remove bookmark
+      fetch(`http://localhost:3000/bookmarks/${id}?email=${user.email}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsBookmarked(false);
+          setBookmarkLoading(false);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Bookmark Removed",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch((err) => {
+          console.error("Error removing bookmark:", err);
+          setBookmarkLoading(false);
+          Swal.fire({
+            icon: "error",
+            title: "Failed to remove bookmark",
+            text: "Please try again later",
+          });
+        });
+    } else {
+      // Add bookmark
+      const bookmarkData = {
+        assignmentId: id,
+        userEmail: user.email,
+        assignmentTitle: assignment?.title,
+        assignmentPhoto: assignment?.photo,
+        assignmentMarks: assignment?.marks,
+        assignmentDueDate: assignment?.dueDate,
+        bookmarkedAt: new Date().toISOString(),
+      };
+
+      fetch("http://localhost:3000/bookmarks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookmarkData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsBookmarked(true);
+          setBookmarkLoading(false);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Assignment Bookmarked!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch((err) => {
+          console.error("Error adding bookmark:", err);
+          setBookmarkLoading(false);
+          Swal.fire({
+            icon: "error",
+            title: "Failed to bookmark",
+            text: "Please try again later",
+          });
+        });
+    }
+  };
 
   const handleSubmit = (formData) => {
     const submissionData = {
@@ -25,7 +127,7 @@ export default function AssignmentDetails() {
 
     console.log("Submitting assignment:", submissionData);
 
-    fetch("https://online-group-study-server-eosin.vercel.app/submitted-assignment", {
+    fetch("http://localhost:3000/submitted-assignment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,8 +151,87 @@ export default function AssignmentDetails() {
       });
   };
 
+  // Fetch comments
+  const fetchComments = () => {
+    setLoadingComments(true);
+    fetch(`http://localhost:3000/assignments/${id}/comments`)
+      .then((res) => res.json())
+      .then((data) => {
+        setComments(data);
+        setLoadingComments(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching comments:", err);
+        setLoadingComments(false);
+      });
+  };
+
+  // Handle comment submission
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!newComment.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Comment",
+        text: "Please write a comment before submitting",
+      });
+      return;
+    }
+
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Not Logged In",
+        text: "Please log in to post a comment",
+      });
+      return;
+    }
+
+    setSubmittingComment(true);
+
+    const commentData = {
+      assignmentId: id,
+      userEmail: user.email,
+      userName: user.displayName || "Anonymous",
+      userPhoto: user.photoURL || "",
+      comment: newComment,
+      createdAt: new Date().toISOString(),
+    };
+
+    fetch("http://localhost:3000/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Comment Posted!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setNewComment("");
+        fetchComments(); // Refresh comments
+        setSubmittingComment(false);
+      })
+      .catch((err) => {
+        console.error("Comment submission failed:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Failed to post comment",
+          text: "Please try again later",
+        });
+        setSubmittingComment(false);
+      });
+  };
+
   useEffect(() => {
-    fetch(`https://online-group-study-server-eosin.vercel.app/assignments`)
+    fetch(`http://localhost:3000/assignments`)
       .then((res) => res.json())
       .then((data) => {
         const assignmentData = data.find(
@@ -62,7 +243,13 @@ export default function AssignmentDetails() {
       .catch((err) => {
         console.error("Error fetching assignment details:", err);
       });
-  }, [id]);
+
+    // Fetch comments when component mounts
+    fetchComments();
+    
+    // Check bookmark status
+    checkBookmarkStatus();
+  }, [id, user]);
 
   const { title, photo, description, dueDate, createdBy, createdAt, marks } =
     assignment || {};
@@ -75,10 +262,43 @@ export default function AssignmentDetails() {
           
           {/* Main Assignment Content */}
           <div className="w-full lg:w-[70%] space-y-4 lg:space-y-3">
-            <h1 className="text-xl sm:text-2xl font-bold leading-tight">
-              <span className="font-extrabold">Assignment: </span>
-              {title}
-            </h1>
+            {/* Title with Bookmark Button */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              <h1 className="text-xl sm:text-2xl font-bold leading-tight flex-1">
+                <span className="font-extrabold">Assignment: </span>
+                {title}
+              </h1>
+              
+              {/* Bookmark Button */}
+              <button
+                onClick={handleBookmarkToggle}
+                disabled={bookmarkLoading}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 border-2 ${
+                  isBookmarked
+                    ? "bg-[#1B0C4D] text-white border-[#1B0C4D]"
+                    : "bg-white text-[#1B0C4D] border-[#1B0C4D] hover:bg-gray-50"
+                } disabled:opacity-50 disabled:cursor-not-allowed self-start sm:self-auto`}
+                title={isBookmarked ? "Remove Bookmark" : "Bookmark Assignment"}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill={isBookmarked ? "currentColor" : "none"}
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                  />
+                </svg>
+                <span className="text-sm sm:text-base font-semibold">
+                  {bookmarkLoading ? "..." : isBookmarked ? "Saved" : "Save"}
+                </span>
+              </button>
+            </div>
             
             <img
               src={photo}
@@ -100,6 +320,82 @@ export default function AssignmentDetails() {
                 <span className="font-bold">Assignment Deadline: </span>
                 {dueDate ? new Date(dueDate).toISOString().split("T")[0] : "N/A"}
               </p>
+            </div>
+
+            {/* Comments Section */}
+            <div className="bg-gray-50 p-4 sm:p-6 rounded-xl mt-6">
+              <h2 className="font-bold text-lg sm:text-xl mb-4">
+                Comments ({comments.length})
+              </h2>
+
+              {/* Comment Form */}
+              <form onSubmit={handleCommentSubmit} className="mb-6">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <textarea
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="Write a comment..."
+                    className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B0C4D] resize-none"
+                    rows="3"
+                    disabled={submittingComment}
+                  />
+                  <button
+                    type="submit"
+                    disabled={submittingComment}
+                    className="px-6 py-3 bg-[#1B0C4D] text-white rounded-lg hover:bg-[#2D1B69] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed h-fit"
+                  >
+                    {submittingComment ? "Posting..." : "Post Comment"}
+                  </button>
+                </div>
+              </form>
+
+              {/* Comments List */}
+              <div className="space-y-4">
+                {loadingComments ? (
+                  <p className="text-center text-gray-500">Loading comments...</p>
+                ) : comments.length === 0 ? (
+                  <p className="text-center text-gray-500">No comments yet. Be the first to comment!</p>
+                ) : (
+                  comments.map((comment) => (
+                    <div
+                      key={comment._id}
+                      className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
+                    >
+                      <div className="flex items-start gap-3">
+                        {/* User Avatar */}
+                        <div className="flex-shrink-0">
+                          {comment.userPhoto ? (
+                            <img
+                              src={comment.userPhoto}
+                              alt={comment.userName}
+                              className="w-10 h-10 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-full bg-[#1B0C4D] flex items-center justify-center text-white font-bold">
+                              {comment.userName?.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Comment Content */}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-bold text-sm sm:text-base">
+                              {comment.userName}
+                            </p>
+                            <span className="text-xs text-gray-500">
+                              {new Date(comment.createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <p className="text-sm sm:text-base text-gray-700">
+                            {comment.comment}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
 

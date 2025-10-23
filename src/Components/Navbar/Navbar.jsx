@@ -108,12 +108,12 @@ export default function Navbar() {
 
                   <ul
                     tabIndex={0}
-                    className="dropdown-content bg-base-100 rounded-box mt-3 p-4 shadow text-left left-1/2 transform -translate-x-1/2 min-w-max"
+                    className="dropdown-content bg-white rounded mt-3 p-4 shadow text-left left-1/2 transform -translate-x-1/2 min-w-max"
                   >
                     <li className="whitespace-nowrap">
                       <Link
                         to="/create-assignment"
-                        className="block px-4 py-2 rounded-box hover:bg-gray-200 transition-colors duration-200 font-sevillana"
+                        className="block px-4 py-2 rounded hover:bg-gray-200 transition-colors duration-200 font-sevillana"
                       >
                         Create Assignment
                       </Link>
@@ -121,9 +121,17 @@ export default function Navbar() {
                     <li className="whitespace-nowrap">
                       <Link
                         to="/my-assignments"
-                        className="block px-4 py-2 rounded-box hover:bg-gray-200 transition-colors duration-200 font-sevillana"
+                        className="block px-4 py-2 rounded hover:bg-gray-200 transition-colors duration-200 font-sevillana"
                       >
                         Attempted Assignments
+                      </Link>
+                    </li>
+                    <li className="whitespace-nowrap">
+                      <Link
+                        to="/my-bookmarks-assignments"
+                        className="block px-4 py-2 rounded hover:bg-gray-200 transition-colors duration-200 font-sevillana"
+                      >
+                        My Bookmarks Assignments
                       </Link>
                     </li>
                   </ul>
