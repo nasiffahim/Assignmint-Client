@@ -23,7 +23,7 @@ export default function AssignmentDetails() {
   const checkBookmarkStatus = () => {
     if (!user?.email) return;
     
-    fetch(`http://localhost:3000/bookmarks/check/${id}?email=${user.email}`)
+    fetch(`https://online-group-study-server-eosin.vercel.app/bookmarks/check/${id}?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setIsBookmarked(data.isBookmarked);
@@ -48,7 +48,7 @@ export default function AssignmentDetails() {
 
     if (isBookmarked) {
       // Remove bookmark
-      fetch(`http://localhost:3000/bookmarks/${id}?email=${user.email}`, {
+      fetch(`https://online-group-study-server-eosin.vercel.app/bookmarks/${id}?email=${user.email}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -84,7 +84,7 @@ export default function AssignmentDetails() {
         bookmarkedAt: new Date().toISOString(),
       };
 
-      fetch("http://localhost:3000/bookmarks", {
+      fetch("https://online-group-study-server-eosin.vercel.app/bookmarks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +127,7 @@ export default function AssignmentDetails() {
 
     console.log("Submitting assignment:", submissionData);
 
-    fetch("http://localhost:3000/submitted-assignment", {
+    fetch("https://online-group-study-server-eosin.vercel.app/submitted-assignment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -154,7 +154,7 @@ export default function AssignmentDetails() {
   // Fetch comments
   const fetchComments = () => {
     setLoadingComments(true);
-    fetch(`http://localhost:3000/assignments/${id}/comments`)
+    fetch(`https://online-group-study-server-eosin.vercel.app/assignments/${id}/comments`)
       .then((res) => res.json())
       .then((data) => {
         setComments(data);
@@ -199,7 +199,7 @@ export default function AssignmentDetails() {
       createdAt: new Date().toISOString(),
     };
 
-    fetch("http://localhost:3000/comments", {
+    fetch("https://online-group-study-server-eosin.vercel.app/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -231,7 +231,7 @@ export default function AssignmentDetails() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/assignments`)
+    fetch(`https://online-group-study-server-eosin.vercel.app/assignments`)
       .then((res) => res.json())
       .then((data) => {
         const assignmentData = data.find(

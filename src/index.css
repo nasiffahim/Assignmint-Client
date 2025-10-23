@@ -19,3 +19,61 @@
 .font-josefin {
   font-family: "Josefin Sans", sans-serif;
 }
+
+
+/* Banner Animation Styles */
+
+/* Floating animation - starts at top, moves down */
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+/* Floating reverse animation - starts at bottom, moves up */
+@keyframes floating-reverse {
+  0%, 100% {
+    transform: translateY(20px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+/* Sliding animation - horizontal movement */
+@keyframes sliding {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+/* Apply animations to elements */
+.floating {
+  animation: floating 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.floating-reverse {
+  animation: floating-reverse 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.sliding {
+  animation: sliding 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Performance optimization - disable animations on low-end devices */
+@media (prefers-reduced-motion: reduce) {
+  .floating,
+  .floating-reverse,
+  .sliding {
+    animation: none;
+  }
+}

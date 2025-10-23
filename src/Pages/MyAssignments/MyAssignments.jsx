@@ -11,13 +11,13 @@ const MyAssignments = () => {
       try {
         // 1. Fetch submitted assignments for the user
         const submittedRes = await axios.get(
-          `http://localhost:3000/my-submitted-assignments?email=${user.email}`
+          `https://online-group-study-server-eosin.vercel.app/my-submitted-assignments?email=${user.email}`
         );
         const submittedAssignments = submittedRes.data;
 
         // 2. Fetch all assignments
         const allAssignmentsRes = await axios.get(
-          `http://localhost:3000/assignments`
+          `https://online-group-study-server-eosin.vercel.app/assignments`
         );
         const allAssignments = allAssignmentsRes.data;
 

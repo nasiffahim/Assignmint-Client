@@ -29,7 +29,7 @@ export default function CreateAssignment() {
     console.log(assignmentData);
 
     axios
-      .post("http://localhost:3000/create-assignment", assignmentData)
+      .post("https://online-group-study-server-eosin.vercel.app/create-assignment", assignmentData)
       .then((res) => {
         const data = res.data;
         console.log("Data added successfully", data);

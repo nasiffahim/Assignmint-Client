@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <Home />,
         loader: () =>
           fetch(
-            "http://localhost:3000/assignments"
+            "https://online-group-study-server-eosin.vercel.app/assignments"
           ),
       },
       {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         element: <Assignments />,
         loader: () =>
           fetch(
-            "http://localhost:3000/assignments"
+            "https://online-group-study-server-eosin.vercel.app/assignments"
           ),
       },
       {

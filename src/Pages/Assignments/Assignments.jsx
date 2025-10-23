@@ -108,7 +108,7 @@ export default function Assignments() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/assignment/${_id}`, { method: "DELETE" })
+        fetch(`https://online-group-study-server-eosin.vercel.app/assignment/${_id}`, { method: "DELETE" })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount && data.deletedCount > 0) {

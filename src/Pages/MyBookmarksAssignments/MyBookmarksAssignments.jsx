@@ -17,7 +17,7 @@ export default function MyBookmarks() {
     }
 
     setLoading(true);
-    fetch(`http://localhost:3000/bookmarks/user/${user.email}`)
+    fetch(`https://online-group-study-server-eosin.vercel.app/bookmarks/user/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBookmarks(data.bookmarks || []);
@@ -44,7 +44,7 @@ export default function MyBookmarks() {
       if (result.isConfirmed) {
         setRemoving(assignmentId);
 
-        fetch(`http://localhost:3000/bookmarks/${assignmentId}?email=${user.email}`, {
+        fetch(`https://online-group-study-server-eosin.vercel.app/bookmarks/${assignmentId}?email=${user.email}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
