@@ -14,6 +14,11 @@ The goal is to create a simple yet functional system where:
 - Assignments can be **reviewed and graded**.
 - Users can **track** their attempted assignments and results.
 
+Newly added features:
+- Assignment Search and Filtering
+- Assignment Bookmarks
+- Functional Comment section in Assignment details page
+
 ---
 
 ## 🛠 Tech Stack
